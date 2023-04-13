@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTDMapper3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.DBBMS.DAO.SystemManagerDAO">
+    <!--命名空间，需要更改成src\main\java\DAO内的数据访问类，指定DAO接口的全限定类名-->
+<!--    <select id="findAll" resultType="cn.DBBMS.entity.Manager">
+        &lt;!&ndash;使用SELECT语句，id内容即为接口内的调用方法，resultType为该方法的返回类型&ndash;&gt;
+        SELECT * FROM Manager;
+    </select>
+
+    <select id="getPassword" resultType="String" parameterType="Integer">
+        &lt;!&ndash;查询登录密码&ndash;&gt;
+        SELECT password FROM Manager
+        WHERE manager_id=#{uid};
+    </select>-->
+
+    <insert id="createBook" parameterType="cn.DBBMS.entity.Book">
+        <!--使用INSERT语句插入管理员操作，需要告知插入的实体对象，也就是parameterType的属性-->
+        <!--设置自增属性<selectKey keyProperty="manager_id" keyColumn="manager_id" resultType="Integer" order="AFTER">
+                SELECT last_insert_id()
+        </selectKey>-->
+        INSERT INTO Book(book_name,author,category,publisher,price)
+        VALUES (#{book_name},#{author},#{category},#{publisher},#{price});
+        <!--VALUES后的{}中的参数名应该与实体类中声明的属性名，保持一致-->
+        <!--#{}表示取参数中的Manager类型中的成员，例如#{password}表示取Manager中的password成员-->
+    </insert>
+
+    <insert id="createLibrarian" parameterType="cn.DBBMS.entity.Manager">
+        <!--使用INSERT语句插入管理员操作，需要告知插入的实体对象，也就是parameterType的属性-->
+        <!--设置自增属性<selectKey keyProperty="manager_id" keyColumn="manager_id" resultType="Integer" order="AFTER">
+                SELECT last_insert_id()
+        </selectKey>-->
+        INSERT INTO Manager(PASSWORD,manager_name,role)
+        VALUES (#{password},#{manager_name},#{role});
+        <!--VALUES后的{}中的参数名应该与实体类中声明的属性名，保持一致-->
+        <!--#{}表示取参数中的Manager类型中的成员，例如#{password}表示取Manager中的password成员-->
+    </insert>
+
+    <insert id="createUser" parameterType="cn.DBBMS.entity.User">
+        <!--使用INSERT语句插入管理员操作，需要告知插入的实体对象，也就是parameterType的属性-->
+        <!--设置自增属性<selectKey keyProperty="manager_id" keyColumn="manager_id" resultType="Integer" order="AFTER">
+                SELECT last_insert_id()
+        </selectKey>-->
+        INSERT INTO User(user_name,role)
+        VALUES(#{user_name},#{role});
+        <!--VALUES后的{}中的参数名应该与实体类中声明的属性名，保持一致-->
+        <!--#{}表示取参数中的Manager类型中的成员，例如#{password}表示取Manager中的password成员-->
+    </insert>
+
+    <delete id="deleteBook" parameterType="Integer">
+        DELETE FROM book
+        WHERE book_id=#{book_id};
+        <!--#{}中的uid表示占位符，名字可以随便写-->
+        <!--这里我的理解是，因为参数值类型是整型，因此没有成员可以选，#{}只能取到参数中的整型-->
+    </delete>
+
+    <delete id="deleteLibrarian" parameterType="Integer">
+        DELETE FROM manager
+        where manager_id=#{manager_id};
+        <!--#{}中的uid表示占位符，名字可以随便写-->
+        <!--这里我的理解是，因为参数值类型是整型，因此没有成员可以选，#{}只能取到参数中的整型-->
+    </delete>
+
+    <delete id="deleteUser" parameterType="Integer">
+        DELETE FROM user
+        where user_id=#{user_id};
+        <!--#{}中的uid表示占位符，名字可以随便写-->
+        <!--这里我的理解是，因为参数值类型是整型，因此没有成员可以选，#{}只能取到参数中的整型-->
+    </delete>
+
+    <select id="findBook" resultType="cn.DBBMS.entity.Book" parameterType="Integer">
+        SELECT * from book
+        where book_id =#{uid};
+    </select>
+
+    <select id="findUser" resultType="cn.DBBMS.entity.User" parameterType="Integer">
+        SELECT * from user
+        where user_id =#{user_id};
+
+    </select>
+
+    <select id="findLibrarian" resultType="cn.DBBMS.entity.Manager" parameterType="Integer">
+        SELECT * from manager
+        where manager_id =#{manager_id};
+    </select>
+<!--    <select id="findBook" resultType="cn.DBBMS.entity.Book" parameterType="Integer">
+        SELECT * from book
+        where book_id =#{uid};
+    </select>-->
+
+<!--    <update id="createDBUser" parameterType="cn.DBBMS.entity.Manager" >
+        UPDATE '#{manager_id,jdbcType=INTEGER}'@'localhost'
+        IDENTIFIED BY '#{password}';
+    </update>-->
+
+    <update id="updateBook" parameterType="cn.DBBMS.entity.Book">
+
+        update book set book_name=#{book_name},author=#{author} ,price=#{price},publisher=#{publisher},category=#{category}
+        where book_id=#{book_id};
+    </update>
+    <update id="updateBook_is_reserved" parameterType="cn.DBBMS.entity.Book">
+
+        update book set is_reserved=#{is_reserved}
+        where book_id=#{book_id};
+    </update>
+    <update id="updateUser" parameterType="cn.DBBMS.entity.User">
+
+        update user set user_name=#{user_name},role=#{role}
+        where user_id=#{user_id};
+    </update>
+    <update id="updateLibrarian" parameterType="cn.DBBMS.entity.Manager">
+
+        update manager set manager_name=#{manager_name},role=#{role},password=#{password}
+        where manager_id=#{manager_id};
+    </update>
+
+<!--    <select id="howManyLibrarian" resultType="Integer">
+        SELECT COUNT(*) FROM Manager
+        WHERE Manager.role='图书管理员';
+    </select>-->
+</mapper>

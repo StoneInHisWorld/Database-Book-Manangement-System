@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE configuration
+                PUBLIC "-//mybatis.org//DTDConfig3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--数据库连接的相关信息-->
+    <environments default="mysql"><!--需要和下面的id对应-->
+        <environment id="mysql">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED"><!--可选UNPOOLED（不使用数据池）、JNDI等参数-->
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <!--驱动，Mybatis5.0以下的写com.mysql.jdbc.Driver，更高版本则写com.mysql.cj.jdbc.Driver-->
+                <property name="url"
+                          value="jdbc:mysql://localhost:3306/dbbms?useUnicode=true&amp;characterEncoding=gbk&amp;serverTimezone=GMT%2B8&amp;"/>
+                <!--操纵的数据库的地址，操纵的数据库名称，定义服务器的时间-->
+                <property name="username" value="root"/>
+                <!--数据库的用户名-->
+                <property name="password" value="123456"/>
+                <!--数据库用户的密码-->
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--映射文件-->
+    <mappers>
+        <mapper resource="cn/DBBMS/DAO/UserDAO.xml"/>
+        <!--通过resource查找到数据访问层的.xml-->
+        <mapper resource="cn/DBBMS/DAO/BookDAO.xml"/>
+        <mapper resource="cn/DBBMS/DAO/InforDAO.xml"/>
+        <mapper resource="cn/DBBMS/DAO/ReservationDAO.xml"/>
+        <mapper resource="cn/DBBMS/DAO/ManagerDAO.xml"/>
+        <mapper resource="cn/DBBMS/DAO/SystemManagerDAO.xml"/>
+        <mapper resource="cn/DBBMS/DAO/LibrarianDAO.xml"/>
+
+    </mappers>
+</configuration>
