@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTDMapper3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.DBBMS.DAO.ManagerDAO">
+    <!--命名空间，需要更改成src\main\java\DAO内的数据访问类，指定DAO接口的全限定类名-->
+    <select id="findAll" resultType="cn.DBBMS.entity.Manager">
+        <!--使用SELECT语句，id内容即为接口内的调用方法，resultType为该方法的返回类型-->
+        SELECT * FROM Manager;
+
+    </select>
+
+    <select id="login" resultType="cn.DBBMS.entity.Manager" parameterType="cn.DBBMS.entity.Manager">
+        <!--查询登录密码-->
+        SELECT * FROM Manager
+        WHERE manager_id=#{manager_id} AND password=#{password};
+    </select>
+
+    <select id="getPassword" resultType="String" parameterType="Integer">
+        <!--查询登录密码-->
+        SELECT password FROM Manager
+        WHERE manager_id=#{uid};
+    </select>
+
+    <insert id="insertManager" parameterType="cn.DBBMS.entity.Manager">
+        <!--使用INSERT语句插入管理员操作，需要告知插入的实体对象，也就是parameterType的属性-->
+        <!--设置自增属性<selectKey keyProperty="manager_id" keyColumn="manager_id" resultType="Integer" order="AFTER">
+                SELECT last_insert_id()
+        </selectKey>-->
+        INSERT INTO Manager(password, manager_name,role)
+        VALUES (#{password},#{manager_name},#{role});
+        <!--VALUES后的{}中的参数名应该与实体类中声明的属性名，保持一致-->
+        <!--#{}表示取参数中的Manager类型中的成员，例如#{password}表示取Manager中的password成员-->
+    </insert>
+
+    <delete id="deleteManager" parameterType="Integer">
+        DELETE FROM Manager
+        WHERE Manager.manager_id=#{uid};
+        <!--#{}中的uid表示占位符，名字可以随便写-->
+        <!--这里我的理解是，因为参数值类型是整型，因此没有成员可以选，#{}只能取到参数中的整型-->
+    </delete>
+
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTDMapper3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.DBBMS.DAO.UserDAO">
+    <!--命名空间，需要更改成src\main\java\DAO内的数据访问类，指定DAO接口的全限定类名-->
+    <select id="findAll" resultType="cn.DBBMS.entity.User">
+        <!--使用SELECT语句，id内容即为接口内的调用方法，resultType为该方法的返回类型-->
+        SELECT * FROM User
+    </select>
+
+    <insert id="createReservation" parameterType="cn.DBBMS.entity.Reservation">
+        INSERT INTO reservation(book_id,user_id,r_time)
+        VALUES (#{book_id},#{user_id},#{r_time});
+    </insert>
+
+    <select id="findBook" resultType="cn.DBBMS.entity.Book" parameterType="Integer">
+        <!--使用SELECT语句，id内容即为接口内的调用方法，resultType为该方法的返回类型-->
+        SELECT * from book
+        where book_id =#{book_id};
+    </select>
+
+    <select id="findInfor" resultType="cn.DBBMS.entity.LendInfor" parameterType="Integer">
+        <!--使用SELECT语句，id内容即为接口内的调用方法，resultType为该方法的返回类型-->
+        SELECT * from lend_infor
+        where user_id =#{user_id};
+    </select>
+</mapper>

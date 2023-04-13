@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTDMapper3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.DBBMS.DAO.LibrarianDAO">
+    <!--命名空间，需要更改成src\main\java\DAO内的数据访问类，指定DAO接口的全限定类名-->
+   <!-- <select id="findAll" resultType="cn.DBBMS.entity.Book">
+        &lt;!&ndash;使用SELECT语句，id内容即为接口内的调用方法，resultType为该方法的返回类型&ndash;&gt;
+        SELECT * FROM Book
+    </select>-->
+    <delete id="cancelReservation" parameterType="Integer">
+        DELETE FROM reservation where book_id=#{book_id};
+    </delete>
+
+    <select id="handleFine" resultType="Integer" parameterType="cn.DBBMS.entity.Infor">
+        SELECT price from book
+        where book_id =#{book_id}
+    </select>
+
+    <delete id="returnBook" parameterType="Integer">
+        DELETE FROM infor where book_id=#{book_id};
+    </delete>
+
+    <update id="afterReturn" parameterType="Integer">
+        UPDATE book set  is_borrowed= 0 where book_id= #{book_id} ;
+    </update>
+
+    <update id="afterLend" parameterType="Integer">
+        UPDATE book set is_borrowed= 1 where book_id= #{book_id} ;
+    </update>
+
+    <select id="legal_and_can_borrowed" parameterType="Integer" resultType="cn.DBBMS.entity.User">
+    SELECT  * from user where user_id =#{user_id};
+    </select>
+
+    <select id="count_borrowed" parameterType="Integer" resultType="Integer">
+    SELECT count(*) from infor where user_id =#{user_id};
+    </select>
+
+    <select id="borrowed_and_reserved" parameterType="Integer" resultType="cn.DBBMS.entity.Book">
+    SELECT  * from book where book_id =#{book_id};
+    </select>
+
+    <select id="who_reservation" parameterType="Integer" resultType="Integer">
+    SELECT  user_id from reservation where book_id =#{book_id};
+    </select>
+
+    <insert id="insert_info" parameterType="cn.DBBMS.entity.Infor">
+        INSERT INTO Infor(book_id,user_id,b_time)
+        VALUES (#{book_id},#{user_id},#{b_time});
+    </insert>
+
+    <update id="update_is_Reserved" parameterType="Integer">
+    update book set is_reserved=0
+    where book_id=#{book_id};
+    </update>
+
+    <select id="findInforOfBook" parameterType="Integer" resultType="cn.DBBMS.entity.Infor">
+            SELECT * FROM Infor
+            WHERE book_id=#{book_id};
+    </select>
+
+    <delete id="deleteInfor" parameterType="Integer">
+        DELETE FROM Infor
+        WHERE book_id=#{book_id};
+    </delete>
+
+
+</mapper>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTDMapper3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.DBBMS.DAO.ReservationDAO">
+    <!--命名空间，需要更改成src\main\java\DAO内的数据访问类，指定DAO接口的全限定类名-->
+    <select id="findAll" resultType="cn.DBBMS.entity.Reservation">
+        <!--使用SELECT语句，id内容即为接口内的调用方法，resultType为该方法的返回类型-->
+        SELECT * FROM Reservation
+    </select>
+</mapper>
